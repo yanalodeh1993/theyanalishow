@@ -11,7 +11,9 @@ export function LinksHub() {
       .from('site_links')
       .select('*')
       .order('order')
-      .then(({ data }) => { if (data) setLinks(data) })
+      .then(({ data, error }) => {
+        if (!error && data) setLinks(data)
+      })
   }, [])
 
   return (

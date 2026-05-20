@@ -3,7 +3,10 @@ import type { Donor } from '@/lib/types'
 type Props = { donors: Donor[] }
 
 function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime()
+  const time = new Date(dateStr).getTime()
+  if (isNaN(time)) return 'Recently'
+  const diff = Date.now() - time
+  if (diff < 0) return 'Just now'
   const hours = Math.floor(diff / 3600000)
   if (hours < 1) return 'Just now'
   if (hours < 24) return `${hours}h ago`
