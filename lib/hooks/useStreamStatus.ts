@@ -17,7 +17,7 @@ export function useStreamStatus() {
       })
 
     const channel = supabase
-      .channel('stream_status_changes')
+      .channel(`stream_status_${Date.now()}`)
       .on(
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'stream_status' },
