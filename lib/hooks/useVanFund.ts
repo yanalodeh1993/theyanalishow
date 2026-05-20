@@ -16,6 +16,8 @@ export function useVanFund() {
       if (fundRes.data) setFund(fundRes.data)
       if (donorsRes.data) setDonors(donorsRes.data)
       setLoading(false)
+    }).catch(() => {
+      setLoading(false)
     })
   }, [])
 

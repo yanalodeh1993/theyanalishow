@@ -11,8 +11,8 @@ export function useStreamStatus() {
     supabase
       .from('stream_status')
       .select('*')
-      .then(({ data }) => {
-        if (data) setStatuses(data)
+      .then(({ data, error }) => {
+        if (!error && data) setStatuses(data)
         setLoading(false)
       })
 
