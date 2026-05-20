@@ -21,7 +21,7 @@ async function setLiveStatus(isLive, viewerCount = 0) {
 }
 
 obs.on('StreamStateChanged', ({ outputActive }) => {
-  setLiveStatus(outputActive)
+  setLiveStatus(outputActive).catch((err) => console.error('Stream status update failed:', err))
 })
 
 async function connect() {

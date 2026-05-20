@@ -28,18 +28,12 @@ export function ScrollAnimations() {
         scrollTrigger: { trigger: '#adventure', start: 'top 70%' },
       })
 
-      const progressBar = document.querySelector('#van-dream .bg-amber') as HTMLElement | null
-      if (progressBar) {
-        const targetWidth = progressBar.style.width
-        progressBar.style.width = '0%'
-        ScrollTrigger.create({
-          trigger: '#van-dream',
-          start: 'top 70%',
-          onEnter: () => {
-            gsap.to(progressBar, { width: targetWidth, duration: 1.2, ease: 'power2.out' })
-          },
-        })
-      }
+      // Van Dream section fade-in — the progress bar's CSS transition handles its own animation
+      gsap.from('#van-dream', {
+        opacity: 0, y: 30,
+        duration: 0.8,
+        scrollTrigger: { trigger: '#van-dream', start: 'top 75%' },
+      })
 
       gsap.from('#find-me-everywhere .grid > *', {
         opacity: 0, y: 30,
