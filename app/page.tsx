@@ -7,6 +7,7 @@ import { AdventureTeaser } from '@/components/adventure/AdventureTeaser'
 import { VanDream } from '@/components/vandream/VanDream'
 import { LinksHub } from '@/components/links/LinksHub'
 import { About } from '@/components/about/About'
+import { ScrollAnimations } from '@/components/ui/ScrollAnimations'
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <VanDream />
         <LinksHub />
         <About />
+        <ScrollAnimations />
       </main>
     </EntryScreen>
   )
