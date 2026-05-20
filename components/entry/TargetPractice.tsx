@@ -8,8 +8,10 @@ export function TargetPractice({ onComplete }: Props) {
   const gameRef = useRef<any>(null)
 
   useEffect(() => {
+    let mounted = true
+
     import('phaser').then((Phaser) => {
-      if (!containerRef.current || gameRef.current) return
+      if (!mounted || !containerRef.current || gameRef.current) return
 
       const TARGETS_REQUIRED = 5
       let hit = 0
@@ -88,11 +90,18 @@ export function TargetPractice({ onComplete }: Props) {
                   scene.tweens.add({ targets: g, alpha: 0, duration: 150, onComplete: () => g.destroy() })
                 })
 
-                scene.add.text(x, y - 40, 'HIT!', {
+                const hitText = scene.add.text(x, y - 40, 'HIT!', {
                   fontFamily: 'JetBrains Mono',
                   fontSize: '18px',
                   color: '#00E5E5',
                 }).setOrigin(0.5)
+                scene.tweens.add({
+                  targets: hitText,
+                  alpha: 0,
+                  y: y - 80,
+                  duration: 400,
+                  onComplete: () => hitText.destroy(),
+                })
 
                 if (hit >= TARGETS_REQUIRED) {
                   scene.time.delayedCall(600, () => {
@@ -123,6 +132,7 @@ export function TargetPractice({ onComplete }: Props) {
     })
 
     return () => {
+      mounted = false
       gameRef.current?.destroy(true)
       gameRef.current = null
     }
