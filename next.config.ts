@@ -2,7 +2,10 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['static-cdn.jtvnw.net', 'i.ytimg.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'static-cdn.jtvnw.net' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
+    ],
   },
 }
 
