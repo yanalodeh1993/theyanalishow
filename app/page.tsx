@@ -1,12 +1,13 @@
 import { Nav } from '@/components/nav/Nav'
 import { EntryScreen } from '@/components/entry/EntryScreen'
+import { Hero } from '@/components/hero/Hero'
 
 export default function Home() {
   return (
     <EntryScreen>
-      <main className="bg-bg min-h-screen">
+      <main className="bg-bg">
         <Nav />
-        <p className="text-cyan pt-24 px-10 font-russo">TheYanaliShow — building...</p>
+        <Hero />
       </main>
     </EntryScreen>
   )
