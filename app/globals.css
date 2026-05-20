@@ -1,26 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Chakra+Petch:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @import "tailwindcss";
 
+@theme {
+  --color-bg: #0A1E1E;
+  --color-surface: #111C1C;
+  --color-deep: #060A0A;
+  --color-cyan: #00E5E5;
+  --color-cyan-glow: #00FFEF;
+  --color-magenta: #FF00C8;
+  --color-body: #C8D8D8;
+  --color-muted: #4A7070;
+  --color-amber: #FFB800;
+
+  --font-russo: 'Russo One', sans-serif;
+  --font-chakra: 'Chakra Petch', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0A1E1E;
+  --surface: #111C1C;
+  --deep: #060A0A;
+  --cyan: #00E5E5;
+  --cyan-glow: #00FFEF;
+  --magenta: #FF00C8;
+  --body: #C8D8D8;
+  --muted: #4A7070;
+  --amber: #FFB800;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--body);
+  font-family: 'Chakra Petch', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
 }
+
+* { cursor: none !important; }
