@@ -1,0 +1,9 @@
+{
+  "name": "obs-relay",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "obs-websocket-js": "^5.0.3",
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}
