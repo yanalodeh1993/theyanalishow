@@ -14,6 +14,7 @@ export function LiveState({ twitchChannel, youtubeVideoId, tiktokHandle, viewerC
           style={{ boxShadow: '0 0 20px rgba(0,229,229,0.1)' }}
         >
           <iframe
+            title="Twitch Player"
             src={`https://player.twitch.tv/?channel=${twitchChannel}&parent=theyanalishow.com&parent=localhost`}
             width="100%"
             height="400"
@@ -24,6 +25,7 @@ export function LiveState({ twitchChannel, youtubeVideoId, tiktokHandle, viewerC
         {youtubeVideoId && (
           <div className="border border-cyan/10 overflow-hidden">
             <iframe
+              title="YouTube Video"
               src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=0`}
               width="100%"
               height="200"
@@ -44,6 +46,7 @@ export function LiveState({ twitchChannel, youtubeVideoId, tiktokHandle, viewerC
 
       <div className="border border-cyan/10 overflow-hidden">
         <iframe
+          title="Twitch Chat"
           src={`https://www.twitch.tv/embed/${twitchChannel}/chat?darkpopout&parent=theyanalishow.com&parent=localhost`}
           width="100%"
           height="500"
