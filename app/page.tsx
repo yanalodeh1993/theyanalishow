@@ -2,6 +2,7 @@ import { Nav } from '@/components/nav/Nav'
 import { EntryScreen } from '@/components/entry/EntryScreen'
 import { Hero } from '@/components/hero/Hero'
 import { LiveZone } from '@/components/live/LiveZone'
+import { ClipsGallery } from '@/components/clips/ClipsGallery'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         <Nav />
         <Hero />
         <LiveZone />
+        <ClipsGallery />
       </main>
     </EntryScreen>
   )
