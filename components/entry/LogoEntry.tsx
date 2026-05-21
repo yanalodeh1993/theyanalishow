@@ -10,11 +10,8 @@ export function LogoEntry({ onComplete }: Props) {
 
   useEffect(() => {
     mountedRef.current = true
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      onComplete()
-    }
     return () => { mountedRef.current = false }
-  }, [onComplete])
+  }, [])
 
   const fireTransition = useCallback(() => {
     if (firedRef.current) return
@@ -32,20 +29,21 @@ export function LogoEntry({ onComplete }: Props) {
       'rgba(255,0,200,0.35)',
     ]
 
+    // Rings expand as slow cinematic sonar pulses — staggered 350ms apart
     const rings = colors.map((color, i) => {
       const ring = document.createElement('div')
       ring.style.cssText = `
         position:absolute; border-radius:50%;
         border:2px solid ${color};
-        box-shadow:0 0 20px ${color};
+        box-shadow:0 0 40px ${color};
         width:10px; height:10px;
         left:50%; top:50%;
         transform:translate(-50%,-50%);
         pointer-events:none;
         transition:
-          width ${700 - i * 80}ms cubic-bezier(0.2,0,0.4,1) ${i * 80}ms,
-          height ${700 - i * 80}ms cubic-bezier(0.2,0,0.4,1) ${i * 80}ms,
-          opacity 500ms ease ${i * 80 + 100}ms;
+          width  ${2200 - i * 150}ms cubic-bezier(0.05, 0, 0.15, 1) ${i * 350}ms,
+          height ${2200 - i * 150}ms cubic-bezier(0.05, 0, 0.15, 1) ${i * 350}ms,
+          opacity 1800ms ease ${i * 350 + 400}ms;
       `
       container.appendChild(ring)
       return ring
@@ -60,16 +58,20 @@ export function LogoEntry({ onComplete }: Props) {
       })
     })
 
+    // Screen glides out — long ease-in-out so the fade feels deliberate
     setTimeout(() => {
       if (container) {
-        container.style.transition = 'opacity 400ms ease'
+        container.style.transition =
+          'opacity 1400ms cubic-bezier(0.4, 0, 0.6, 1), transform 1400ms cubic-bezier(0.4, 0, 0.6, 1)'
         container.style.opacity = '0'
+        container.style.transform = 'scale(1.04)'
       }
-    }, 280)
+    }, 900)
 
+    // Site begins appearing while entry is still mid-fade — seamless overlap
     setTimeout(() => {
       if (mountedRef.current) onComplete()
-    }, 700)
+    }, 1900)
   }, [onComplete])
 
   return (
@@ -109,7 +111,7 @@ export function LogoEntry({ onComplete }: Props) {
       <button
         onClick={fireTransition}
         className="logo-entry-btn"
-        style={{ width: 320, height: 320 }}
+        style={{ width: 500, height: 500 }}
         aria-label="Enter TheYanaliShow"
         type="button"
       >
@@ -127,7 +129,7 @@ export function LogoEntry({ onComplete }: Props) {
           src="/logo.png"
           alt="TheYanaliShow Logo"
           className="logo-entry-img relative z-10"
-          style={{ width: 280, height: 280, objectFit: 'contain' }}
+          style={{ width: 460, height: 460, objectFit: 'contain' }}
           draggable={false}
         />
 
