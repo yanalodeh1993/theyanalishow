@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { TargetPractice } from './TargetPractice'
+import { LogoEntry } from './LogoEntry'
 
 type Props = { children: React.ReactNode }
 
@@ -44,7 +44,7 @@ export function EntryScreen({ children }: Props) {
   if (state === 'game') {
     return (
       <>
-        <TargetPractice onComplete={handleComplete} />
+        <LogoEntry onComplete={handleComplete} />
         <button
           onClick={handleComplete}
           className="fixed bottom-6 right-6 z-[101] font-mono text-xs text-muted/40 hover:text-muted underline"
