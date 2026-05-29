@@ -25,13 +25,7 @@ export function ParallaxLogo() {
       className="transition-transform duration-75 ease-out"
       style={{ filter: 'drop-shadow(0 0 30px rgba(0,229,229,0.4))' }}
     >
-      <Image
-        src="/logo-transparent.png"
-        alt="The Yanali Show"
-        width={320}
-        height={320}
-        priority
-      />
+      <Image src="/logo-transparent.png" alt="The Yanali Show" width={320} height={320} priority />
     </div>
   )
 }

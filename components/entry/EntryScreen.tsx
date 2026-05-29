@@ -8,15 +8,20 @@ export function EntryScreen({ children }: Props) {
   const [state, setState] = useState<'loading' | 'game' | 'done'>('loading')
 
   useEffect(() => {
-    // In dev, always clear so the entry is testable on every refresh
+    // During local development we want to skip the intro so content is
+    // immediately visible for debugging. In production the normal flow
+    // (checking sessionStorage) remains unchanged.
     if (process.env.NODE_ENV === 'development') {
-      sessionStorage.removeItem('tys_entry_played')
+      setState('done')
+      return
     }
+
     const played = sessionStorage.getItem('tys_entry_played')
     if (played) {
       setState('done')
       return
     }
+
     setState('game')
   }, [])
 

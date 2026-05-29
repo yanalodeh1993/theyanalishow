@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   description: 'Gaming. Adventure. The open road. — TheYanaliShow',
   openGraph: {
     title: 'The Yanali Show',
-    description: 'Competitive gaming meets van life adventure. Watch live on Twitch, YouTube, and TikTok.',
+    description:
+      'Competitive gaming meets van life adventure. Watch live on Twitch, YouTube, and TikTok.',
     url: 'https://theyanalishow.com',
     siteName: 'The Yanali Show',
   },

@@ -6,46 +6,51 @@ export function VanDream() {
   const { fund, donors, percentage } = useVanFund()
 
   return (
-    <section id="van-dream" className="py-24 px-10 bg-surface">
+    <section
+      id="van-dream"
+      className="px-10 md:px-14 py-20"
+      style={{ background: '#0d0d0f', borderTop: '1px solid rgba(100,120,255,0.1)' }}
+    >
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-
+        {/* LEFT */}
         <div>
-          <p className="font-mono text-xs tracking-[0.5em] text-amber/70 uppercase mb-4">
-            The Dream
-          </p>
           <h2
-            className="font-russo text-white uppercase leading-none mb-6"
-            style={{ fontSize: 'clamp(44px, 6vw, 80px)' }}
+            className="font-russo uppercase leading-[0.9] tracking-[2px] mb-6"
+            style={{ fontSize: 'clamp(52px, 7vw, 96px)' }}
           >
-            FUND THE<br />
-            <span className="text-amber" style={{ textShadow: '0 0 20px rgba(255,184,0,0.4)' }}>
-              VAN LIFE
+            <span className="block text-white">HELP FUND</span>
+            <span className="block">
+              <span className="text-white">THE </span>
+              <span className="chrome-text">VAN</span>
             </span>
+            <span className="block chrome-text">DREAM</span>
           </h2>
-          <p className="font-chakra font-light text-body/70 leading-relaxed mb-8 max-w-md">
-            The next chapter of TheYanaliShow leaves the fixed setup behind.
-            A converted van. New cities. Streams from forests, coastlines, mountain passes.
-            Help make it happen.
+
+          <p className="font-chakra text-muted text-sm leading-[1.8] max-w-[420px] mb-8">
+            The next chapter of TheYanaliShow takes place on the road. A converted van. New cities.
+            New streams. New adventures. Help make it happen.
           </p>
 
           {fund && (
             <div className="mb-8">
-              <div className="flex justify-between font-mono text-xs mb-2">
-                <span className="text-muted uppercase tracking-wider">Van Fund</span>
-                <span className="text-amber">{percentage}% there</span>
+              <div className="flex justify-between font-chakra text-xs font-semibold mb-2.5">
+                <span className="text-body">Van Conversion Fund</span>
+                <span className="font-chakra text-sm" style={{ color: '#FFB800' }}>
+                  {percentage}% there
+                </span>
               </div>
-              <div className="h-1.5 bg-amber/10 overflow-hidden">
+              <div
+                className="h-1.5 overflow-hidden rounded-full"
+                style={{ background: 'rgba(255,255,255,0.05)' }}
+              >
                 <div
-                  className="h-full bg-amber transition-all duration-1000"
+                  className="h-full transition-all duration-1000 rounded-full"
                   style={{
                     width: `${percentage}%`,
-                    boxShadow: '0 0 10px #FFB800',
+                    background: 'linear-gradient(to right, #6478ff, #FFB800)',
+                    boxShadow: '0 0 10px rgba(100,120,255,0.4)',
                   }}
                 />
-              </div>
-              <div className="flex justify-between font-mono text-xs mt-2 text-muted">
-                <span>€{fund.current_amount.toLocaleString()}</span>
-                <span>€{fund.goal_amount.toLocaleString()}</span>
               </div>
             </div>
           )}
@@ -54,17 +59,19 @@ export function VanDream() {
             href="https://paypal.me/theyanalishow"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block font-chakra font-semibold text-sm tracking-widest uppercase px-8 py-4 bg-amber text-black transition-all hover:shadow-[0_0_30px_#FFB800]"
-            style={{ boxShadow: '0 0 12px rgba(255,184,0,0.3)' }}
+            className="btn-neon-amber font-russo text-[13px] tracking-[2px] uppercase px-9 py-4 inline-block cursor-pointer"
+            style={{
+              background: 'transparent',
+              color: '#FFB800',
+              border: '1px solid #FFB800',
+            }}
           >
-            🚐 Support the Dream
+            Support the Dream →
           </a>
         </div>
 
+        {/* RIGHT: donors */}
         <div>
-          <p className="font-mono text-xs tracking-[0.5em] text-muted uppercase mb-6">
-            Recent Supporters
-          </p>
           <DonorList donors={donors} />
         </div>
       </div>

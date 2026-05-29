@@ -23,15 +23,15 @@ export function useStreamStatus() {
         { event: 'UPDATE', schema: 'public', table: 'stream_status' },
         (payload) => {
           setStatuses((prev) =>
-            prev.map((s) =>
-              s.id === payload.new.id ? (payload.new as StreamStatus) : s
-            )
+            prev.map((s) => (s.id === payload.new.id ? (payload.new as StreamStatus) : s))
           )
         }
       )
       .subscribe()
 
-    return () => { supabase.removeChannel(channel) }
+    return () => {
+      supabase.removeChannel(channel)
+    }
   }, [])
 
   const isAnyLive = statuses.some((s) => s.is_live)

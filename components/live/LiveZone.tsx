@@ -9,24 +9,32 @@ export function LiveZone() {
   return (
     <section
       id="streams"
-      className="px-10 py-20"
-      style={{ background: isAnyLive ? '#060A0A' : '#0A1E1E' }}
+      className="px-10 md:px-14 py-20"
+      style={{
+        background: '#0d0d0f',
+        borderTop: '1px solid rgba(100,120,255,0.1)',
+      }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-10">
           <h2
-            className="font-russo text-white uppercase"
+            className="font-russo text-white uppercase tracking-[2px]"
             style={{ fontSize: 'clamp(36px, 5vw, 64px)' }}
           >
             {isAnyLive ? (
               <>
-                <span className="text-magenta" style={{ textShadow: '0 0 20px #FF00C8' }}>LIVE</span>
-                {' '}NOW
+                <span className="text-magenta">LIVE</span> NOW
               </>
             ) : (
               'STREAMS'
             )}
           </h2>
+          {isAnyLive && (
+            <span
+              className="w-3 h-3 rounded-full bg-magenta animate-pulse"
+              style={{ boxShadow: '0 0 10px #a78bff' }}
+            />
+          )}
         </div>
 
         {isAnyLive ? (

@@ -5,14 +5,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: '#0A1E1E',
-        surface: '#111C1C',
-        deep: '#060A0A',
-        cyan: '#00E5E5',
-        'cyan-glow': '#00FFEF',
-        magenta: '#FF00C8',
-        body: '#C8D8D8',
-        muted: '#4A7070',
+        bg: '#0d0d0f',
+        surface: '#14141a',
+        deep: '#0a0a0d',
+        cyan: '#6478ff',
+        'cyan-glow': '#8898ff',
+        magenta: '#a78bff',
+        body: '#d0d8ff',
+        muted: '#3a3a5a',
         amber: '#FFB800',
       },
       fontFamily: {

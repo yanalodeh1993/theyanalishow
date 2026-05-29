@@ -10,7 +10,9 @@ export function LogoEntry({ onComplete }: Props) {
 
   useEffect(() => {
     mountedRef.current = true
-    return () => { mountedRef.current = false }
+    return () => {
+      mountedRef.current = false
+    }
   }, [])
 
   const fireTransition = useCallback(() => {
@@ -23,11 +25,7 @@ export function LogoEntry({ onComplete }: Props) {
     if (!container) return
 
     const maxSize = Math.max(window.innerWidth, window.innerHeight) * 2.4
-    const colors = [
-      'rgba(0,229,229,0.9)',
-      'rgba(0,255,239,0.6)',
-      'rgba(255,0,200,0.35)',
-    ]
+    const colors = ['rgba(0,229,229,0.9)', 'rgba(0,255,239,0.6)', 'rgba(255,0,200,0.35)']
 
     // Rings expand as slow cinematic sonar pulses — staggered 350ms apart
     const rings = colors.map((color, i) => {
@@ -51,7 +49,7 @@ export function LogoEntry({ onComplete }: Props) {
 
     requestAnimationFrame(() => {
       const s = `${maxSize}px`
-      rings.forEach(r => {
+      rings.forEach((r) => {
         r.style.width = s
         r.style.height = s
         r.style.opacity = '0'

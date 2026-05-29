@@ -12,13 +12,15 @@ export function useVanFund() {
     Promise.all([
       supabase.from('van_fund').select('*').single(),
       supabase.from('recent_donors').select('*').order('donated_at', { ascending: false }).limit(5),
-    ]).then(([fundRes, donorsRes]) => {
-      if (fundRes.data) setFund(fundRes.data)
-      if (donorsRes.data) setDonors(donorsRes.data)
-      setLoading(false)
-    }).catch(() => {
-      setLoading(false)
-    })
+    ])
+      .then(([fundRes, donorsRes]) => {
+        if (fundRes.data) setFund(fundRes.data)
+        if (donorsRes.data) setDonors(donorsRes.data)
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
   }, [])
 
   const percentage = fund
