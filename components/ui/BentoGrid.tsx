@@ -165,8 +165,7 @@ export function BentoGrid() {
             <div className="flex items-center gap-5">
               <button
                 onClick={() => scrollTo('streams')}
-                className="font-chakra font-semibold text-sm tracking-widest uppercase px-7 py-3.5 bg-magenta text-white transition-all hover:shadow-[0_0_30px_#FF00C8] cursor-pointer"
-                style={{ boxShadow: '0 0 14px rgba(255,0,200,0.3)' }}
+                className="btn-glow-purple"
               >
                 Watch Live
               </button>
