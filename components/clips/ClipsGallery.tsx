@@ -1,43 +1,109 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
+
 type Clip = {
   id: string
   title: string
-  platform: 'twitch' | 'youtube' | 'tiktok'
+  platform: 'youtube' | 'twitch'
   viewCount: string
+  thumbnailUrl: string
   url: string
 }
-
-const CLIPS: Clip[] = [
-  { id: '1', title: 'Solo Win — Final Circle', platform: 'twitch', viewCount: '12.4K', url: '#' },
-  { id: '2', title: 'Clutch Elimination Streak', platform: 'youtube', viewCount: '8.2K', url: '#' },
-  { id: '3', title: 'Insane Long Shot', platform: 'tiktok', viewCount: '34K', url: '#' },
-  { id: '4', title: 'Box Fight Domination', platform: 'twitch', viewCount: '5.1K', url: '#' },
-  { id: '5', title: '5 Elims in 30 Seconds', platform: 'youtube', viewCount: '19K', url: '#' },
-  { id: '6', title: 'Building 1v1 Win', platform: 'tiktok', viewCount: '27K', url: '#' },
-]
 
 const PLATFORM_COLORS: Record<string, string> = {
   twitch: '#9146FF',
   youtube: '#FF0000',
-  tiktok: '#6478ff',
 }
 
-function PlayIcon() {
+const VISIBLE = 5
+
+function pickRandom(pool: Clip[], count: number): Clip[] {
+  const shuffled = [...pool].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, Math.min(count, shuffled.length))
+}
+
+function ChevronLeft() {
   return (
-    <svg
-      className="w-10 h-10 text-cyan"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      style={{ opacity: 1, transform: 'none' }}
-    >
-      <path d="M8 5v14l11-7z" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+      <path d="M15 18l-6-6 6-6" />
     </svg>
   )
 }
 
+function ChevronRight() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  )
+}
+
+function PlayOverlay() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ background: 'rgba(0,0,0,0.45)' }}>
+      <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'rgba(100,120,255,0.9)' }}>
+        <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+function ClipCardSkeleton() {
+  return (
+    <div className="flex-shrink-0 w-72 rounded-xl overflow-hidden border animate-pulse" style={{ borderColor: 'rgba(255,255,255,0.06)', background: '#14141a' }}>
+      <div className="w-full h-40" style={{ background: '#1e1e2a' }} />
+      <div className="p-4 space-y-2">
+        <div className="h-3 rounded w-16" style={{ background: '#1e1e2a' }} />
+        <div className="h-4 rounded w-full" style={{ background: '#1e1e2a' }} />
+        <div className="h-3 rounded w-20" style={{ background: '#1e1e2a' }} />
+      </div>
+    </div>
+  )
+}
+
 export function ClipsGallery() {
+  const [pool, setPool] = useState<Clip[]>([])
+  const [displayed, setDisplayed] = useState<Clip[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+  const shuffleRef = useRef(() => {})
+
+  shuffleRef.current = () => {
+    if (pool.length === 0) return
+    setDisplayed(pickRandom(pool, VISIBLE))
+  }
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [ytRes, ttRes] = await Promise.allSettled([
+          fetch('/api/clips/youtube').then(r => r.json()),
+          fetch('/api/clips/twitch').then(r => r.json()),
+        ])
+
+        const clips: Clip[] = []
+        if (ytRes.status === 'fulfilled') clips.push(...(ytRes.value.clips ?? []))
+        if (ttRes.status === 'fulfilled') clips.push(...(ttRes.value.clips ?? []))
+
+        if (clips.length === 0) {
+          setError(true)
+        } else {
+          setPool(clips)
+          setDisplayed(pickRandom(clips, VISIBLE))
+        }
+      } catch {
+        setError(true)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    load()
+  }, [])
+
   return (
     <section
       id="clips"
@@ -51,76 +117,112 @@ export function ClipsGallery() {
         >
           HIGH<span className="chrome-text">LIGHTS</span>
         </h2>
-        <span className="font-chakra text-xs text-muted uppercase tracking-widest hidden md:block">
-          Scroll to explore →
-        </span>
+
+        <div className="flex items-center gap-3">
+          <span className="font-chakra text-xs text-muted uppercase tracking-widest hidden md:block mr-2">
+            {pool.length > 0 ? `${pool.length} clips` : 'Loading…'}
+          </span>
+          <button
+            onClick={() => shuffleRef.current()}
+            disabled={loading || pool.length === 0}
+            aria-label="Previous shuffle"
+            className="flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-150 disabled:opacity-30"
+            style={{ borderColor: 'rgba(100,120,255,0.3)', color: '#6478ff' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#6478ff'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(100,120,255,0.1)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(100,120,255,0.3)'; (e.currentTarget as HTMLButtonElement).style.background = 'transparent' }}
+          >
+            <ChevronLeft />
+          </button>
+          <button
+            onClick={() => shuffleRef.current()}
+            disabled={loading || pool.length === 0}
+            aria-label="Next shuffle"
+            className="flex items-center justify-center w-9 h-9 rounded-full border transition-all duration-150 disabled:opacity-30"
+            style={{ borderColor: 'rgba(100,120,255,0.3)', color: '#6478ff' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = '#6478ff'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(100,120,255,0.1)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(100,120,255,0.3)'; (e.currentTarget as HTMLButtonElement).style.background = 'transparent' }}
+          >
+            <ChevronRight />
+          </button>
+        </div>
       </div>
 
       <div
-        className="flex gap-4 px-10 md:px-14 overflow-x-auto pb-4 snap-x snap-mandatory"
-        style={{ scrollbarColor: '#6478ff #14141a' }}
+        className="flex gap-4 px-10 md:px-14 pb-4"
+        style={{ overflowX: 'auto', scrollbarColor: '#6478ff #14141a' }}
       >
-        {CLIPS.map((clip) => (
-          <a
-            key={clip.id}
-            href={clip.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-shrink-0 w-72 snap-start group cursor-pointer"
-          >
-            <div
-              className="border overflow-hidden rounded-xl transition-all duration-200"
-              style={{
-                borderColor: 'rgba(255,255,255,0.06)',
-                boxShadow: '0 0 0 rgba(100,120,255,0)',
-                transition: 'transform 0.15s, box-shadow 0.15s, border-color 0.15s',
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLDivElement
-                el.style.borderColor = '#6478ff'
-                el.style.boxShadow = '0 0 20px rgba(100,120,255,0.15)'
-                el.style.transform = 'translateY(-3px)'
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLDivElement
-                el.style.borderColor = 'rgba(255,255,255,0.06)'
-                el.style.boxShadow = 'none'
-                el.style.transform = 'none'
-              }}
+        {loading ? (
+          Array.from({ length: VISIBLE }).map((_, i) => <ClipCardSkeleton key={i} />)
+        ) : error ? (
+          <p className="font-chakra text-sm text-muted px-2 py-8">
+            Couldn't load clips — check that your API keys are set in <code>.env.local</code>.
+          </p>
+        ) : (
+          displayed.map(clip => (
+            <a
+              key={clip.id}
+              href={clip.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 w-72 group cursor-pointer"
             >
               <div
-                className="relative w-full h-40 flex flex-col items-center justify-center gap-2 text-center"
-                style={{
-                  background: 'linear-gradient(135deg, #141420, #0a0a12)',
-                  color: 'rgba(100,120,255,0.85)',
+                className="border overflow-hidden rounded-xl transition-all duration-200"
+                style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = '#6478ff'
+                  el.style.boxShadow = '0 0 20px rgba(100,120,255,0.15)'
+                  el.style.transform = 'translateY(-3px)'
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLDivElement
+                  el.style.borderColor = 'rgba(255,255,255,0.06)'
+                  el.style.boxShadow = 'none'
+                  el.style.transform = 'none'
                 }}
               >
-                <PlayIcon />
-                <span className="font-chakra text-[11px] uppercase tracking-[0.18em] text-cyan/70">
-                  Watch clip preview
-                </span>
-              </div>
-
-              <div className="p-4" style={{ background: '#14141a' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <span
-                    className="font-chakra text-[11px] font-bold px-2 py-0.5 uppercase tracking-wider border rounded-full"
-                    style={{
-                      color: PLATFORM_COLORS[clip.platform],
-                      borderColor: `${PLATFORM_COLORS[clip.platform]}40`,
-                    }}
-                  >
-                    {clip.platform}
-                  </span>
+                <div className="relative w-full h-40 overflow-hidden" style={{ background: '#141420' }}>
+                  {clip.thumbnailUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={clip.thumbnailUrl}
+                      alt={clip.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center" style={{ color: 'rgba(100,120,255,0.5)' }}>
+                      <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  )}
+                  <PlayOverlay />
                 </div>
-                <h3 className="font-chakra font-medium text-body text-sm leading-tight mb-2">
-                  {clip.title}
-                </h3>
-                <span className="font-chakra text-xs text-muted">{clip.viewCount} views</span>
+
+                <div className="p-4" style={{ background: '#14141a' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span
+                      className="font-chakra text-[11px] font-bold px-2 py-0.5 uppercase tracking-wider border rounded-full"
+                      style={{
+                        color: PLATFORM_COLORS[clip.platform],
+                        borderColor: `${PLATFORM_COLORS[clip.platform]}40`,
+                      }}
+                    >
+                      {clip.platform}
+                    </span>
+                  </div>
+                  <h3 className="font-chakra font-medium text-body text-sm leading-tight mb-2 line-clamp-2">
+                    {clip.title}
+                  </h3>
+                  {clip.viewCount && (
+                    <span className="font-chakra text-xs text-muted">{clip.viewCount} views</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))
+        )}
       </div>
     </section>
   )
