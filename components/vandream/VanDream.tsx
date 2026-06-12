@@ -56,7 +56,7 @@ export function VanDream() {
           )}
 
           <a
-            href="https://paypal.me/theyanalishow"
+            href="https://paypal.me/yanalodeh729"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-neon-amber font-russo text-[13px] tracking-[2px] uppercase px-9 py-4 inline-block cursor-pointer"
