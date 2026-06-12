@@ -9,7 +9,7 @@ export function VanDream() {
     <section
       id="van-dream"
       className="px-10 md:px-14 py-20"
-      style={{ background: '#0d0d0f', borderTop: '1px solid rgba(100,120,255,0.1)' }}
+      style={{ borderTop: '1px solid rgba(100,120,255,0.1)' }}
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* LEFT */}
@@ -28,7 +28,7 @@ export function VanDream() {
 
           <p className="font-chakra text-muted text-sm leading-[1.8] max-w-[420px] mb-8">
             The next chapter of TheYanaliShow takes place on the road. A converted van. New cities.
-            New streams. New adventures. Help make it happen.
+            New streams. New adventures. <span className="text-white">Help make it happen.</span>
           </p>
 
           {fund && (

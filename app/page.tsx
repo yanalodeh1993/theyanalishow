@@ -12,7 +12,7 @@ import { ScrollAnimations } from '@/components/ui/ScrollAnimations'
 export default function Home() {
   return (
     <EntryScreen>
-      <main className="bg-bg">
+      <main className="flex flex-col gap-5">
         <Nav />
         <Hero />
         <StatStrip />

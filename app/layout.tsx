@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { CursorTrail } from '@/components/ui/CursorTrail'
+import { StarField } from '@/components/ui/StarField'
 
 export const metadata: Metadata = {
   title: 'The Yanali Show',
@@ -19,7 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <CursorTrail />
-        {children}
+        <StarField />
+        <div className="relative" style={{ zIndex: 1 }}>
+          {children}
+        </div>
       </body>
     </html>
   )

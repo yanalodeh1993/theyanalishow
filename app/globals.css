@@ -38,7 +38,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border: 2px solid #6478ff;
 }
 
 html {
@@ -347,6 +346,7 @@ body {
     linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
   background-size: 36px 36px;
 }
+
 
 /* ── Dev: force-reveal fallback ──────────────────────────────────
    This temporary rule ensures scroll-driven animations (GSAP)

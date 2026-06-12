@@ -8,7 +8,7 @@ export function Hero() {
     <section
       id="hero"
       className="relative overflow-hidden grid-bg"
-      style={{ minHeight: '88vh', paddingTop: '73px', background: '#0d0d0f' }}
+      style={{ minHeight: '88vh', paddingTop: '73px' }}
     >
       {/* ambient glow */}
       <div
@@ -63,7 +63,7 @@ export function Hero() {
             className="font-chakra font-light leading-[1.8] max-w-[420px] mt-8"
             style={{ fontSize: '14px', color: '#3a3a5a' }}
           >
-            Gaming. Adventure. The open road.
+            <span className="text-white">Gaming. Adventure. The open road.</span>
             <br />
             TheYanaliShow is where the battlefield meets the horizon.
           </p>

@@ -5,7 +5,7 @@ export function About() {
     <section
       id="about"
       className="px-10 md:px-14 py-20 grid-bg"
-      style={{ background: '#0a0a0d', borderTop: '1px solid rgba(100,120,255,0.1)' }}
+      style={{ borderTop: '1px solid rgba(100,120,255,0.1)' }}
     >
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-14">
         <div className="shrink-0 flex-none">
@@ -44,7 +44,7 @@ export function About() {
           <p className="font-chakra text-sm leading-relaxed text-muted/70">
             Every stream is a battle. Every road is a new arena.
             <br />
-            Follow the journey — wherever it goes.
+            <span className="text-white">Follow the journey — wherever it goes.</span>
           </p>
         </div>
       </div>

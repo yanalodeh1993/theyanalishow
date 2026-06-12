@@ -11,7 +11,6 @@ export function LiveZone() {
       id="streams"
       className="px-10 md:px-14 py-20"
       style={{
-        background: '#0d0d0f',
         borderTop: '1px solid rgba(100,120,255,0.1)',
       }}
     >

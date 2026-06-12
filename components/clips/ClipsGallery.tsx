@@ -108,7 +108,7 @@ export function ClipsGallery() {
     <section
       id="clips"
       className="py-20 overflow-hidden"
-      style={{ background: '#0d0d0f', borderTop: '1px solid rgba(100,120,255,0.1)' }}
+      style={{ borderTop: '1px solid rgba(100,120,255,0.1)' }}
     >
       <div className="px-10 md:px-14 mb-8 flex items-end justify-between">
         <h2
