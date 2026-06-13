@@ -1,6 +1,15 @@
 import Image from 'next/image'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
+import type { SiteConfig } from '@/lib/types'
 
-export function About() {
+export async function About() {
+  const supabase = await createSupabaseServerClient()
+  const { data } = await supabase.from('site_config').select('*').eq('id', 1).single()
+  const config = data as SiteConfig | null
+
+  const bioMain = config?.bio_main ?? 'Competitive gamer. Battle royale player. Future van lifer. TheYanaliShow is where the grind of ranked play meets the freedom of the open road.'
+  const bioSub = config?.bio_sub ?? 'Every stream is a battle. Every road is a new arena. Follow the journey — wherever it goes.'
+
   return (
     <section
       id="about"
@@ -38,13 +47,10 @@ export function About() {
           </h2>
 
           <p className="font-chakra text-[15px] leading-[1.75] text-muted max-w-lg mb-3">
-            Competitive gamer. Battle royale player. Future van lifer. TheYanaliShow is where the
-            grind of ranked play meets the freedom of the open road.
+            {bioMain}
           </p>
           <p className="font-chakra text-sm leading-relaxed text-muted/70">
-            Every stream is a battle. Every road is a new arena.
-            <br />
-            <span className="text-white">Follow the journey — wherever it goes.</span>
+            {bioSub}
           </p>
         </div>
       </div>
