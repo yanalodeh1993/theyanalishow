@@ -29,3 +29,36 @@ export type SiteLink = {
   icon: string
   order: number
 }
+
+export type Profile = {
+  id: string
+  email: string
+  role: 'owner' | 'editor'
+  created_at: string
+}
+
+export type Clip = {
+  id: string
+  title: string
+  url: string
+  thumbnail_url: string | null
+  platform: 'twitch' | 'youtube' | 'tiktok' | 'instagram' | 'shorts'
+  display_order: number
+  created_at: string
+}
+
+export type SiteConfig = {
+  id: number
+  bio_main: string
+  bio_sub: string
+  updated_at: string
+}
+
+export type Invite = {
+  id: string
+  email: string
+  role: 'editor'
+  invited_by: string | null
+  accepted: boolean
+  created_at: string
+}
