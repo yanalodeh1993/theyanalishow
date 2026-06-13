@@ -1,5 +1,5 @@
 import { createSupabaseServerClient } from '@/lib/supabase-server'
-import type { StreamStatus, VanFund, Donor, Clip } from '@/lib/types'
+import type { StreamStatus, VanFund, Donor } from '@/lib/types'
 import Link from 'next/link'
 
 const PLATFORM_COLOR: Record<string, string> = {
@@ -13,12 +13,10 @@ export default async function DashboardOverview() {
     { data: streams },
     { data: fund },
     { data: donors },
-    { data: clips },
   ] = await Promise.all([
     supabase.from('stream_status').select('*'),
     supabase.from('van_fund').select('*').limit(1).single(),
     supabase.from('recent_donors').select('*').order('donated_at', { ascending: false }).limit(5),
-    supabase.from('clips').select('*').order('display_order'),
   ])
 
   const vanFund = fund as VanFund | null
@@ -105,10 +103,6 @@ export default async function DashboardOverview() {
             <h2 className="font-russo text-sm uppercase tracking-wider text-body">Quick Stats</h2>
           </div>
           <div className="flex flex-col gap-3 font-chakra text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted">Curated clips</span>
-              <span className="text-body">{(clips as Clip[] | null)?.length ?? 0}</span>
-            </div>
             <div className="flex justify-between">
               <span className="text-muted">Recent donors</span>
               <span className="text-body">{(donors as Donor[] | null)?.length ?? 0}</span>

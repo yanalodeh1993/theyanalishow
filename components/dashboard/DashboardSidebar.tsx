@@ -6,7 +6,6 @@ import { signOut } from '@/app/actions/auth'
 
 const NAV = [
   { href: '/dashboard',          label: 'Overview',       icon: '⊞' },
-  { href: '/dashboard/clips',    label: 'Clips',          icon: '▶' },
   { href: '/dashboard/stream',   label: 'Stream Control', icon: '◉' },
   { href: '/dashboard/van-fund', label: 'Van Fund',       icon: '♡' },
   { href: '/dashboard/content',  label: 'Site Content',   icon: '✎' },
