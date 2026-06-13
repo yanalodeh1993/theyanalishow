@@ -365,3 +365,22 @@ body {
     visibility: visible !important;
   }
 }
+
+/* ── Dashboard mode — restore native cursor ─────────────── */
+.dashboard-shell * {
+  cursor: auto !important;
+}
+.dashboard-shell a,
+.dashboard-shell button,
+.dashboard-shell [role="button"],
+.dashboard-shell label,
+.dashboard-shell select,
+.dashboard-shell input,
+.dashboard-shell textarea {
+  cursor: pointer !important;
+}
+.dashboard-shell input,
+.dashboard-shell textarea,
+.dashboard-shell select {
+  cursor: text !important;
+}
